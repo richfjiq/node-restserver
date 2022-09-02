@@ -27,8 +27,6 @@ const createProduct = async (req = request, res = response) => {
   const productDB = await Product.findOne({ name });
   const categoryDB = await Category.findById(req.body.category);
 
-  console.log(categoryDB);
-
   if (productDB) {
     return res.status(400).json({
       msg: `Product ${productDB.name}, already exists.`,
@@ -64,7 +62,9 @@ const updateProduct = async (req = request, res = response) => {
 
   const { state, user, ...data } = req.body;
 
-  data.name = data.name.toUpperCase();
+  if (data.name) {
+    data.name = data.name.toUpperCase();
+  }
   data.user = req.userAuthenticated._id;
 
   const product = await Product.findByIdAndUpdate(id, data, {
