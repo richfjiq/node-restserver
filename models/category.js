@@ -4,6 +4,7 @@ const CategorySchema = Schema({
   name: {
     type: String,
     required: [true, 'Category is required.'],
+    unique: true,
   },
   state: {
     type: Boolean,
@@ -20,8 +21,6 @@ const CategorySchema = Schema({
 CategorySchema.methods.toJSON = function () {
   const obj = this.toObject();
   delete obj.__v;
-  obj.uid = obj._id;
-  delete obj._id;
   return obj;
 };
 
