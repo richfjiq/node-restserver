@@ -1,3 +1,4 @@
+const { Category } = require('../models');
 const Role = require('../models/role');
 const User = require('../models/user');
 
@@ -24,8 +25,17 @@ const userByIdExists = async (id) => {
   }
 };
 
+const categoryExists = async (id) => {
+  const category = await Category.findById(id);
+
+  if (!category || !category.state) {
+    throw new Error(`There is not category with this id: ${id}`);
+  }
+};
+
 module.exports = {
   isRoleValid,
   emailExists,
   userByIdExists,
+  categoryExists,
 };
